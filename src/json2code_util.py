@@ -112,13 +112,18 @@ def check_list(lst):
     
     return t
 
-# checks that a string length is
+# checks that a string length is in bounds (if it exists)
+# n - int (string length)
+# returns int
 def check_strlen(n):
     if not strlen:
         return n
     assert n + 1 <= strlen, f'String of length {n} (+1 for null byte) exceeds maximum length of {strlen}'
     return strlen
 
+# checks that an array length is in bounds (if it exists)
+# n - int (array length)
+# returns int
 def check_arrlen(n):
     if not arrlen:
         return n
@@ -157,7 +162,7 @@ def binding2str(id, v):
     else:
         l, cf = base_cvsn(t)
         r = cf(v)
-        b = f'[{strlen if strlen else (len(v) + 1)}]' if t is str else ''
+        b = f'[{check_strlen(len(v))}]' if t is str else ''
 
     return f'{l} {id}{b}', r
         

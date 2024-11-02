@@ -54,12 +54,13 @@ def strv2str(v):
 # v - (validated) list
 # cf - conversion function
 # returns str
-def listv2str(v, cf):
+def listv2str(v, cf, ws='\t'):
     f = cf
+    ws_t = ws + '\t'
     # identify sublist type if list is nested
     if (type(v[0]) is list):
-        f = lambda x : listv2str(x, cf)
-    return '{' + f'{ ', '.join(f(x) for x in v) }' + '}'
+        f = lambda x : listv2str(x, cf, ws_t)
+    return '{\n' + f'{ ',\n'.join(ws_t + f(x) for x in v) }\n{ws}' + '}'
 
 # determines the needed "base" c type and conversion function
 # t - type
@@ -117,7 +118,7 @@ def check_list(lst):
 # returns int
 def check_strlen(n):
     if not strlen:
-        return n
+        return n + 1
     assert n + 1 <= strlen, f'String of length {n} (+1 for null byte) exceeds maximum length of {strlen}'
     return strlen
 
